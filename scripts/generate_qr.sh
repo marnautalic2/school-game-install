@@ -17,12 +17,12 @@ else
   exit 1
 fi
 
-ENCODED=$($PYTHON_BIN - <<'PY'
+ENCODED=$($PYTHON_BIN - "$URL" <<'PY'
 import sys
 from urllib.parse import quote
 print(quote(sys.argv[1], safe=""))
 PY
-"$URL")
+)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
