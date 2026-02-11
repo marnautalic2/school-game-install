@@ -7,7 +7,7 @@ window.APP_CONFIG = {
   iosInstallUrl: "https://apps.apple.com/app/idXXXXXXXXXX",
   androidInstallUrl: "https://github.com/marnautalic2/school-game-install/releases/download/v.0.1.0-demo/schoolgame.apk",
   webPlayUrl: "play/",
-  autoRedirectOnRecognizedPlatform: false,
+  autoRedirectOnRecognizedPlatform: true,
   autoRedirectDelayMs: 300,
   qrImagePath: "assets/qr.png",
   demoUrl: "demo.html",
