@@ -1,12 +1,13 @@
 window.APP_CONFIG = {
-  appName: "Sprout Tap",
-  orgName: "Your Org",
-  buildLabel: "prototype-0.1",
+  appName: "Školske Igre",
+  orgName: "Dječji vrtić Pupoljak, Otok",
+  buildLabel: "1.0",
   demoMode: false,
   landingUrl: "https://marnautalic2.github.io/school-game-install/",
-  iosTestflightUrl: "https://testflight.apple.com/join/XXXXXXX",
-  androidApkUrl: "https://github.com/marnautalic2/school-game-install/releases/download/v.0.1.0-demo/schoolgame.apk",
+  iosInstallUrl: "https://apps.apple.com/app/idXXXXXXXXXX",
+  androidInstallUrl: "https://github.com/marnautalic2/school-game-install/releases/download/v.0.1.0-demo/schoolgame.apk",
   qrImagePath: "assets/qr.png",
   demoUrl: "demo.html",
-  supportEmail: "support@example.com"
+  supportEmail: "info@otok.hr",
+  trustNote: "Aplikacija je neprofitna, obrazovna i radi offline bez prijave korisnika."
 };

@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="hr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Install Demo - School Game</title>
+    <title>Demo instalacije - Školske Igre</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Spline+Sans:wght@400;600&display=swap"
       rel="stylesheet"
@@ -75,21 +75,21 @@
   </head>
   <body>
     <div class="card">
-      <div class="pill" id="platformLabel">Demo mode</div>
-      <h1>QR install demo</h1>
-      <p>This page proves the QR → landing → link flow is working.</p>
-      <p class="note">Replace demo links with real TestFlight + APK URLs when ready.</p>
-      <a class="cta" href="index.html">Back to install page</a>
+      <div class="pill" id="platformLabel">Demo način</div>
+      <h1>Demo instalacijskog toka</h1>
+      <p>Ova stranica potvrđuje da QR -> landing -> instalacijska poveznica radi ispravno.</p>
+      <p class="note">Kad buildovi budu spremni, u config.js zamijeni demo poveznice pravim iOS/Android poveznicama.</p>
+      <a class="cta" href="index.html">Natrag na stranicu za instalaciju</a>
     </div>
     <script>
       const params = new URLSearchParams(window.location.search);
       const platform = params.get("platform") || "unknown";
       const label = document.getElementById("platformLabel");
       label.textContent = platform === "ios"
-        ? "Demo for iOS"
+        ? "Demo za iOS"
         : platform === "android"
-        ? "Demo for Android"
-        : "Demo mode";
+        ? "Demo za Android"
+        : "Demo način";
     </script>
   </body>
 </html>

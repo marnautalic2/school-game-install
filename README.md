@@ -1,27 +1,46 @@
 # School Game Install Landing
 
-This repo hosts the public landing page used by the QR code. It routes iOS users to TestFlight and Android users to a direct APK link.
+Ovaj repozitorij sadrži javnu landing stranicu za QR kod instalacije aplikacije.
+Stranica automatski prepoznaje iOS/Android, ali nudi i ručne gumbe za odabir platforme.
 
-## Demo mode (before real builds)
-Edit `config.js` and keep:
+## Produkcijski način (preporučeno)
+U `config.js` postavi:
+
+- `demoMode: false`
+- `landingUrl`: URL tvoje GitHub Pages stranice
+- `iosInstallUrl`: iOS instalacijska poveznica
+- `androidInstallUrl`: Android APK/AAB landing poveznica
+- `buildLabel`, `supportEmail`, `trustNote`
+
+Napomena: zadrži isti `landingUrl` dugoročno kako QR kod ne bi trebalo mijenjati.
+
+## Demo način (prije pravih buildova)
+U `config.js` postavi:
+
 - `demoMode: true`
-- `landingUrl` set to your GitHub Pages URL
+- `landingUrl`: URL tvoje GitHub Pages stranice
 
-The Install button will open `demo.html`, proving the QR flow works.
+Gumb za instalaciju će voditi na `demo.html` i potvrditi da QR -> landing -> redirekcija radi.
 
-## When real builds are ready
-Set `demoMode: false` and fill:
-- `iosTestflightUrl`
-- `androidApkUrl`
+## iOS distribucija
 
-Keep the same `landingUrl` so the QR code never changes.
+- Stranica je sada postavljena za App Store (unlisted) iOS distribuciju.
+- Postavi `iosInstallUrl` na svoj stvarni unlisted App Store link.
 
-## QR image
-Generate a QR for your landing URL using:
+## Android nepoznati izvori
+
+- Android build se dijeli kao APK iz GitHub Releases.
+- Ako instalacija bude blokirana, korisnik treba uključiti opciju:
+  Postavke -> Sigurnost/Privatnost -> Instaliraj nepoznate aplikacije -> odabrani preglednik -> Dopusti iz ovog izvora.
+- Nakon instalacije preporuka je ponovno isključiti tu opciju.
+
+## QR kod
+Generiraj QR kod za landing URL:
 
 ```
 scripts/generate_qr.sh https://<github-username>.github.io/<repo>/
 ```
 
-This writes `assets/qr.png` in this repo. Then set:
+Skripta zapisuje `assets/qr.png`. U `config.js` ostavi:
+
 - `qrImagePath: "assets/qr.png"`

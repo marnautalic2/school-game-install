@@ -5,14 +5,20 @@
   const heroLead = document.getElementById("heroLead");
   const installButton = document.getElementById("installButton");
   const copyLink = document.getElementById("copyLink");
+  const iosButton = document.getElementById("iosButton");
+  const androidButton = document.getElementById("androidButton");
   const linkHint = document.getElementById("linkHint");
   const platformStatus = document.getElementById("platformStatus");
   const iosCard = document.getElementById("iosCard");
   const androidCard = document.getElementById("androidCard");
+  const iosTitle = document.getElementById("iosTitle");
+  const iosSteps = document.getElementById("iosSteps");
+  const iosNote = document.getElementById("iosNote");
   const qrImage = document.getElementById("qrImage");
   const qrMeta = document.getElementById("qrMeta");
   const buildLabel = document.getElementById("buildLabel");
   const supportEmail = document.getElementById("supportEmail");
+  const trustNote = document.getElementById("trustNote");
   const demoTag = document.getElementById("demoTag");
 
   const ua = navigator.userAgent || navigator.vendor || window.opera || "";
@@ -27,28 +33,50 @@
   const platform = isIOS ? "ios" : isAndroid ? "android" : "unknown";
   const demoMode = Boolean(config.demoMode);
   const demoUrl = config.demoUrl || "demo.html";
+  const iosInstallUrl = config.iosInstallUrl || "";
+  const androidInstallUrl = config.androidInstallUrl || config.androidApkUrl || "";
+
+  const setButtonUrl = (button, url) => {
+    if (!button) return;
+    if (demoMode || !isPlaceholder(url)) {
+      button.href = demoMode ? `${demoUrl}?platform=${button.id === "iosButton" ? "ios" : "android"}` : url;
+      button.target = "_blank";
+      button.rel = "noopener";
+      button.classList.remove("disabled");
+      button.removeAttribute("aria-disabled");
+      return;
+    }
+    button.href = "#";
+    button.classList.add("disabled");
+    button.setAttribute("aria-disabled", "true");
+  };
 
   const getTargetUrl = () => {
     if (demoMode) {
       return `${demoUrl}?platform=${platform}`;
     }
-    if (platform === "ios") return config.iosTestflightUrl;
-    if (platform === "android") return config.androidApkUrl;
+    if (platform === "ios") return iosInstallUrl;
+    if (platform === "android") return androidInstallUrl;
     return "";
   };
 
   const targetUrl = getTargetUrl();
+  const shareUrl = targetUrl || config.landingUrl || window.location.href;
 
-  const appName = config.appName || "School Game";
-  appTitle.textContent = `Install ${appName} on iOS and Android`;
-  heroLead.textContent = `Scan the QR code or use the button for the right device. ${appName} is built for quick, low-friction setup.`;
+  const appName = config.appName || "Školske Igre";
+  appTitle.textContent = `Instaliraj ${appName} na iOS i Android`;
+  heroLead.textContent = `Skeniraj QR kod ili odaberi gumb za svoj uređaj. ${appName} je postavljen za brzu i jednostavnu instalaciju.`;
 
   if (config.buildLabel) {
-    buildLabel.textContent = `Build: ${config.buildLabel}`;
+    buildLabel.textContent = `Verzija: ${config.buildLabel}`;
   }
 
   if (config.supportEmail) {
-    supportEmail.textContent = `Contact ${config.supportEmail}`;
+    supportEmail.textContent = `Kontakt: ${config.supportEmail}`;
+  }
+
+  if (config.trustNote && trustNote) {
+    trustNote.textContent = config.trustNote;
   }
 
   if (demoMode && demoTag) {
@@ -62,59 +90,74 @@
   if (config.landingUrl && !isPlaceholder(config.landingUrl)) {
     qrMeta.textContent = config.landingUrl;
   } else {
-    qrMeta.textContent = "Set landingUrl in config.js to your hosted page.";
+    qrMeta.textContent = "Postavi landingUrl u config.js na svoju hostanu stranicu.";
+  }
+
+  if (iosTitle && iosSteps && iosNote) {
+    iosTitle.textContent = "iOS (App Store)";
+    iosSteps.innerHTML = `
+      <li>Otvori App Store poveznicu.</li>
+      <li>Dodirni Preuzmi ili Instaliraj.</li>
+      <li>Pokreni aplikaciju nakon instalacije.</li>
+    `;
+    iosNote.textContent = "Aplikacija je distribuirana preko privatne (unlisted) App Store poveznice.";
   }
 
   if (platform === "ios") {
-    platformStatus.textContent = "Detected iOS device";
+    platformStatus.textContent = "Prepoznat iOS uređaj";
     iosCard.classList.add("active");
-    installButton.textContent = demoMode ? "Open demo" : "Open TestFlight link";
+    installButton.textContent = demoMode ? "Otvori demo" : "Otvori App Store poveznicu";
   } else if (platform === "android") {
-    platformStatus.textContent = "Detected Android device";
+    platformStatus.textContent = "Prepoznat Android uređaj";
     androidCard.classList.add("active");
-    installButton.textContent = demoMode ? "Open demo" : "Download APK";
+    installButton.textContent = demoMode ? "Otvori demo" : "Preuzmi Android APK";
   } else {
-    platformStatus.textContent = demoMode ? "Demo mode (device unknown)" : "Choose iOS or Android below";
-    installButton.textContent = demoMode ? "Open demo" : "Select your device";
+    platformStatus.textContent = demoMode
+      ? "Demo način (nepoznat uređaj)"
+      : "Automatsko prepoznavanje nije uspjelo. Odaberi iOS ili Android ispod.";
+    installButton.textContent = demoMode ? "Otvori demo" : "Odaberi platformu";
   }
 
   if (!demoMode && isPlaceholder(targetUrl)) {
     installButton.classList.add("disabled");
     installButton.setAttribute("aria-disabled", "true");
     installButton.href = "#";
-    linkHint.textContent = "Update your links in config.js before sharing.";
+    linkHint.textContent = "Ažuriraj iOS i Android poveznice u config.js prije dijeljenja.";
   } else {
     installButton.href = targetUrl;
     installButton.target = "_blank";
     installButton.rel = "noopener";
     linkHint.textContent = demoMode
-      ? "Demo mode enabled. Replace links in config.js when builds are ready."
-      : "Ready to share. Use the QR code for quick installs.";
+      ? "Demo način je aktivan. Zamijeni poveznice u config.js kad buildovi budu spremni."
+      : "Stranica je spremna za dijeljenje. Skeniraj QR kod za najbrži pristup.";
   }
+
+  setButtonUrl(iosButton, iosInstallUrl);
+  setButtonUrl(androidButton, androidInstallUrl);
 
   copyLink.addEventListener("click", async () => {
     const fallback = () => {
       const temp = document.createElement("input");
-      temp.value = targetUrl || "";
+      temp.value = shareUrl;
       document.body.appendChild(temp);
       temp.select();
       document.execCommand("copy");
       temp.remove();
-      copyLink.textContent = "Copied";
-      setTimeout(() => (copyLink.textContent = "Copy link"), 1500);
+      copyLink.textContent = "Kopirano";
+      setTimeout(() => (copyLink.textContent = "Kopiraj poveznicu"), 1500);
     };
 
-    if (!demoMode && isPlaceholder(targetUrl)) {
-      copyLink.textContent = "Link missing";
-      setTimeout(() => (copyLink.textContent = "Copy link"), 1500);
+    if (!demoMode && !shareUrl) {
+      copyLink.textContent = "Nema poveznice";
+      setTimeout(() => (copyLink.textContent = "Kopiraj poveznicu"), 1500);
       return;
     }
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       try {
-        await navigator.clipboard.writeText(targetUrl);
-        copyLink.textContent = "Copied";
-        setTimeout(() => (copyLink.textContent = "Copy link"), 1500);
+        await navigator.clipboard.writeText(shareUrl);
+        copyLink.textContent = "Kopirano";
+        setTimeout(() => (copyLink.textContent = "Kopiraj poveznicu"), 1500);
       } catch (error) {
         fallback();
       }
