@@ -12,6 +12,8 @@ U `config.js` postavi:
 - `iosInstallUrl`: iOS instalacijska poveznica
 - `androidInstallUrl`: Android APK/AAB landing poveznica
 - `webPlayUrl`: web build URL (npr. `play/`)
+- `autoRedirectOnRecognizedPlatform`: `true` za automatsko preusmjeravanje na iOS/Android link čim se uređaj prepozna
+- `autoRedirectDelayMs`: odgoda preusmjeravanja u milisekundama (npr. `300`)
 - `buildLabel`, `supportEmail`, `trustNote`
 
 Napomena: zadrži isti `landingUrl` dugoročno kako QR kod ne bi trebalo mijenjati.

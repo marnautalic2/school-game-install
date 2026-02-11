@@ -37,6 +37,10 @@
   const iosInstallUrl = config.iosInstallUrl || "";
   const androidInstallUrl = config.androidInstallUrl || config.androidApkUrl || "";
   const webPlayUrl = config.webPlayUrl || "play/";
+  const autoRedirectOnRecognizedPlatform = Boolean(config.autoRedirectOnRecognizedPlatform);
+  const autoRedirectDelayMs = Number.isFinite(config.autoRedirectDelayMs)
+    ? Math.max(0, Number(config.autoRedirectDelayMs))
+    : 300;
 
   const setButtonUrl = (button, url) => {
     if (!button) return;
@@ -137,6 +141,21 @@
     linkHint.textContent = demoMode
       ? "Demo način je aktivan. Zamijeni poveznice u config.js kad buildovi budu spremni."
       : "Stranica je spremna za dijeljenje. Skeniraj QR kod za najbrži pristup.";
+  }
+
+  const shouldAutoRedirect =
+    autoRedirectOnRecognizedPlatform &&
+    (platform === "ios" || platform === "android") &&
+    targetUrl &&
+    !isPlaceholder(targetUrl);
+
+  if (shouldAutoRedirect) {
+    platformStatus.textContent = platform === "ios"
+      ? "Prepoznat iOS uređaj. Preusmjeravanje na App Store..."
+      : "Prepoznat Android uređaj. Pokretanje preuzimanja...";
+    setTimeout(() => {
+      window.location.assign(targetUrl);
+    }, autoRedirectDelayMs);
   }
 
   setButtonUrl(iosButton, iosInstallUrl);

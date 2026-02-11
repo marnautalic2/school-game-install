@@ -103,6 +103,10 @@ body {
   margin-top: -6px;
 }
 
+.demo-tag[hidden] {
+  display: none;
+}
+
 h1 {
   font-family: "Baloo 2", "Comic Sans MS", cursive;
   font-size: clamp(32px, 4vw, 56px);
@@ -342,7 +346,7 @@ h1 {
   }
 
   .qr-card {
-    order: -1;
+    order: 1;
   }
 
   .cards {
