@@ -67,6 +67,7 @@
   };
 
   const webFallbackAvailable = !demoMode && !!webPlayUrl && !isPlaceholder(webPlayUrl);
+  const hasRealIosInstallUrl = !!iosInstallUrl && !isPlaceholder(iosInstallUrl);
 
   const targetUrl = getTargetUrl();
   const shareUrl = targetUrl || config.landingUrl || window.location.href;
@@ -115,7 +116,7 @@
     platformStatus.textContent = "Prepoznat iOS uređaj";
     iosCard.classList.add("active");
     installButton.textContent = demoMode ? "Otvori demo" : "Otvori App Store poveznicu";
-    if (webButton) webButton.hidden = true;
+    if (webButton) webButton.hidden = !(webFallbackAvailable && !hasRealIosInstallUrl);
   } else if (platform === "android") {
     platformStatus.textContent = "Prepoznat Android uređaj";
     androidCard.classList.add("active");

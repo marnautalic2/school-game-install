@@ -3,6 +3,7 @@
 Ovaj repozitorij sadrži javnu landing stranicu za QR kod instalacije aplikacije.
 Stranica automatski prepoznaje iOS/Android, ali nudi i ručne gumbe za odabir platforme.
 Ako uređaj nije prepoznat, prikazuje se i gumb `Igraj u pregledniku` (web fallback).
+Na iOS-u se `Igraj u pregledniku` također prikazuje kao fallback ako `iosInstallUrl` nije postavljen ili je placeholder.
 
 ## Produkcijski način (preporučeno)
 U `config.js` postavi:

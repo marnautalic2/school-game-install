@@ -5,7 +5,7 @@ window.APP_CONFIG = {
   demoMode: false,
   landingUrl: "https://marnautalic2.github.io/school-game-install/",
   iosInstallUrl: "https://apps.apple.com/app/idXXXXXXXXXX",
-  androidInstallUrl: "https://github.com/marnautalic2/school-game-install/releases/download/v.0.1.0-demo/schoolgame.apk",
+  androidInstallUrl: "https://github.com/marnautalic2/school-game-install/releases/download/v1.0.0-release/skolskeigre.apk",
   webPlayUrl: "play/",
   autoRedirectOnRecognizedPlatform: true,
   autoRedirectDelayMs: 300,
