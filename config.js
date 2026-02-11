@@ -11,6 +11,6 @@ window.APP_CONFIG = {
   autoRedirectDelayMs: 300,
   qrImagePath: "assets/qr.png",
   demoUrl: "demo.html",
-  supportEmail: "info@otok.hr",
+  supportEmail: "vrtic@pu-pupoljak.hr",
   trustNote: "Aplikacija je neprofitna, obrazovna i radi offline bez prijave korisnika."
 };
