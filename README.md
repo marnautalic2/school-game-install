@@ -2,6 +2,7 @@
 
 Ovaj repozitorij sadrži javnu landing stranicu za QR kod instalacije aplikacije.
 Stranica automatski prepoznaje iOS/Android, ali nudi i ručne gumbe za odabir platforme.
+Ako uređaj nije prepoznat, prikazuje se i gumb `Igraj u pregledniku` (web fallback).
 
 ## Produkcijski način (preporučeno)
 U `config.js` postavi:
@@ -10,6 +11,7 @@ U `config.js` postavi:
 - `landingUrl`: URL tvoje GitHub Pages stranice
 - `iosInstallUrl`: iOS instalacijska poveznica
 - `androidInstallUrl`: Android APK/AAB landing poveznica
+- `webPlayUrl`: web build URL (npr. `play/`)
 - `buildLabel`, `supportEmail`, `trustNote`
 
 Napomena: zadrži isti `landingUrl` dugoročno kako QR kod ne bi trebalo mijenjati.

@@ -7,6 +7,7 @@
   const copyLink = document.getElementById("copyLink");
   const iosButton = document.getElementById("iosButton");
   const androidButton = document.getElementById("androidButton");
+  const webButton = document.getElementById("webButton");
   const linkHint = document.getElementById("linkHint");
   const platformStatus = document.getElementById("platformStatus");
   const iosCard = document.getElementById("iosCard");
@@ -35,6 +36,7 @@
   const demoUrl = config.demoUrl || "demo.html";
   const iosInstallUrl = config.iosInstallUrl || "";
   const androidInstallUrl = config.androidInstallUrl || config.androidApkUrl || "";
+  const webPlayUrl = config.webPlayUrl || "play/";
 
   const setButtonUrl = (button, url) => {
     if (!button) return;
@@ -59,6 +61,8 @@
     if (platform === "android") return androidInstallUrl;
     return "";
   };
+
+  const webFallbackAvailable = !demoMode && !!webPlayUrl && !isPlaceholder(webPlayUrl);
 
   const targetUrl = getTargetUrl();
   const shareUrl = targetUrl || config.landingUrl || window.location.href;
@@ -107,15 +111,18 @@
     platformStatus.textContent = "Prepoznat iOS uređaj";
     iosCard.classList.add("active");
     installButton.textContent = demoMode ? "Otvori demo" : "Otvori App Store poveznicu";
+    if (webButton) webButton.hidden = true;
   } else if (platform === "android") {
     platformStatus.textContent = "Prepoznat Android uređaj";
     androidCard.classList.add("active");
     installButton.textContent = demoMode ? "Otvori demo" : "Preuzmi Android APK";
+    if (webButton) webButton.hidden = true;
   } else {
     platformStatus.textContent = demoMode
       ? "Demo način (nepoznat uređaj)"
       : "Automatsko prepoznavanje nije uspjelo. Odaberi iOS ili Android ispod.";
     installButton.textContent = demoMode ? "Otvori demo" : "Odaberi platformu";
+    if (webButton) webButton.hidden = !webFallbackAvailable;
   }
 
   if (!demoMode && isPlaceholder(targetUrl)) {
@@ -134,6 +141,21 @@
 
   setButtonUrl(iosButton, iosInstallUrl);
   setButtonUrl(androidButton, androidInstallUrl);
+
+  if (webButton) {
+    if (webFallbackAvailable) {
+      webButton.href = webPlayUrl;
+      webButton.target = "_blank";
+      webButton.rel = "noopener";
+      webButton.classList.remove("disabled");
+      webButton.removeAttribute("aria-disabled");
+    } else {
+      webButton.href = "#";
+      webButton.classList.add("disabled");
+      webButton.setAttribute("aria-disabled", "true");
+      webButton.hidden = true;
+    }
+  }
 
   copyLink.addEventListener("click", async () => {
     const fallback = () => {
