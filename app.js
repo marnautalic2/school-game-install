@@ -72,7 +72,7 @@
   const targetUrl = getTargetUrl();
   const shareUrl = targetUrl || config.landingUrl || window.location.href;
 
-  const appName = config.appName || "Školske Igre";
+  const appName = config.appName || "Predškolske Igre";
   appTitle.textContent = `Instaliraj ${appName} na iOS i Android`;
   heroLead.textContent = `Skeniraj QR kod ili odaberi gumb za svoj uređaj. ${appName} je postavljen za brzu i jednostavnu instalaciju.`;
 

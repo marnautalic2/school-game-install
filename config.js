@@ -1,5 +1,5 @@
 window.APP_CONFIG = {
-  appName: "Školske Igre",
+  appName: "Predškolske Igre",
   orgName: "Dječji vrtić Pupoljak, Otok",
   buildLabel: "1.0",
   demoMode: false,
