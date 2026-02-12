@@ -310,6 +310,16 @@ h1 {
   font-size: 16px;
 }
 
+.support-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.support-list p {
+  margin: 0;
+}
+
 .noscript {
   background: #fff;
   padding: 12px 16px;

@@ -80,8 +80,18 @@
     buildLabel.textContent = `Verzija: ${config.buildLabel}`;
   }
 
-  if (config.supportEmail) {
-    supportEmail.textContent = `Kontakt: ${config.supportEmail}`;
+  if (supportEmail) {
+    var supportEmails = [];
+    if (Array.isArray(config.supportEmails)) {
+      supportEmails = config.supportEmails.filter((value) => typeof value === "string" && value.trim().length > 0);
+    } else if (typeof config.supportEmail === "string" && config.supportEmail.trim().length > 0) {
+      supportEmails = [config.supportEmail.trim()];
+    }
+    if (supportEmails.length > 0) {
+      supportEmail.innerHTML = `<p>Kontakt:</p>${supportEmails
+        .map((email) => `<p>${email}</p>`)
+        .join("")}`;
+    }
   }
 
   if (config.trustNote && trustNote) {
